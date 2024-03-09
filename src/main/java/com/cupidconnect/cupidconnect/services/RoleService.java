@@ -1,40 +1,16 @@
 package com.cupidconnect.cupidconnect.services;
 
-
-import com.cupidconnect.cupidconnect.models.Role;
-import com.cupidconnect.cupidconnect.repositories.RoleRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.cupidconnect.cupidconnect.models.RoleEntity;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class RoleService implements IRoleService{
-    private final RoleRepository roleRepository;
+public interface RoleService {
+     RoleEntity createRole(RoleEntity roleEntity);
+     RoleEntity getRoleById(long id);
 
-    @Override
-    public Role createRole(Role role) {
-        return roleRepository.save(role);
-    }
+     List<RoleEntity> getAllRoles();
 
-    @Override
-    public Role getRoleById(long id) {
-        return roleRepository.findById(id).orElseThrow(()-> new RuntimeException("Role not found"));
-    }
+     RoleEntity updateRole(long id, RoleEntity newRoleEntity);
 
-    @Override
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
-
-    @Override
-    public Role updateRole(long id, Role newRole) {
-        return null;
-    }
-
-    @Override
-    public void deleteRole(long id) {
-
-    }
+     void deleteRole(long id);
 }

@@ -1,8 +1,8 @@
 package com.cupidconnect.cupidconnect.repositories;
 
-import com.cupidconnect.cupidconnect.models.Role;
+import com.cupidconnect.cupidconnect.models.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
 }
