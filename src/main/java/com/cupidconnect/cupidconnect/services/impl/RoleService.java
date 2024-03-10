@@ -1,8 +1,9 @@
-package com.cupidconnect.cupidconnect.services;
+package com.cupidconnect.cupidconnect.services.impl;
 
 
 import com.cupidconnect.cupidconnect.models.Role;
 import com.cupidconnect.cupidconnect.repositories.RoleRepository;
+import com.cupidconnect.cupidconnect.services.IRoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RoleService implements IRoleService{
+public class RoleService implements IRoleService {
     private final RoleRepository roleRepository;
 
     @Override
@@ -19,7 +20,7 @@ public class RoleService implements IRoleService{
     }
 
     @Override
-    public Role getRoleById(long id) {
+    public Role getRoleById(Integer id) {
         return roleRepository.findById(id).orElseThrow(()-> new RuntimeException("Role not found"));
     }
 
@@ -29,12 +30,12 @@ public class RoleService implements IRoleService{
     }
 
     @Override
-    public Role updateRole(long id, Role newRole) {
+    public Role updateRole(Integer id, Role newRole) {
         return null;
     }
 
     @Override
-    public void deleteRole(long id) {
+    public void deleteRole(Integer id) {
 
     }
 }

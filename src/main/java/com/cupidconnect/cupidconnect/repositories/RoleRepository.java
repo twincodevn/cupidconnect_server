@@ -2,7 +2,10 @@ package com.cupidconnect.cupidconnect.repositories;
 
 import com.cupidconnect.cupidconnect.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface RoleRepository extends JpaRepository<Role, Long> {
+
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Integer> {
 
 }

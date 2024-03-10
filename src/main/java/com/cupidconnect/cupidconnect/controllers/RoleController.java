@@ -1,11 +1,8 @@
 package com.cupidconnect.cupidconnect.controllers;
 
 
-import com.cupidconnect.cupidconnect.repositories.RoleRepository;
-import com.cupidconnect.cupidconnect.services.RoleService;
+import com.cupidconnect.cupidconnect.services.impl.RoleService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.Role;
-import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
