@@ -29,7 +29,5 @@ public class ProfileEntity {
     @Column(name = "work_at")
     private String workAt;
 
-    @Column(name = "mbti_mark")
-    private Float mbtiMark;
 
 }

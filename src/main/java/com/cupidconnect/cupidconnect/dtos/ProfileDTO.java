@@ -15,6 +15,6 @@ public class ProfileDTO {
     private String intro;
     private String hobbies;
     private String workAt;
-    private Float mbtiMark;
+
 
 }
