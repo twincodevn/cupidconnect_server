@@ -18,10 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
+import java.io.*;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+
 public class SecurityConfig {
 
     private final UserServiceImpl userDetailsService;
@@ -33,41 +34,23 @@ public class SecurityConfig {
 
         return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(
-                        req -> req.requestMatchers("/api/v1/auth/login/**", "/api/v1/auth/register/**")
-                                .permitAll()
-                                .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
-                                .anyRequest()
-                                .authenticated()
-                ).userDetailsService(userDetailsService)
-                // lỗi 403 Forbidden: là bị cấm nếu như nhập sai username hoặc password mặc dù có token hợp lệ
-                // 401 Unauthorized: là bị cấm vì token ko hợp lệ để gửi lên server
-                .exceptionHandling(e -> e.accessDeniedHandler(customAccessDeniedHandler)
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/signup", "/login").permitAll()
+                        .requestMatchers("/api/v1/users/**").hasAuthority("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .userDetailsService(userDetailsService)
+                .exceptionHandling(e -> e
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                // !!!! CHƯA CẦN CHO DỰ ÁN CUPID !!!!
-//                .logout(l -> {
-//                    l.logoutUrl("/logout")
-//                            .addLogoutHandler(customLogoutHandler)
-//                            .logoutSuccessHandler(
-//                                    (request, response, authentication) -> SecurityContextHolder.clearContext()
-//                            );
-//                })
                 .build();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception {
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
 }
